@@ -9,3 +9,4 @@
 /QueueSender/obj/Debug/net6.0/refint
 /QueueSender/obj/Debug/net6.0
 /serviceBusConnStr.txt
+/QueueReceiver

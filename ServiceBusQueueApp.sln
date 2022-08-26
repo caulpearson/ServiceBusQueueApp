@@ -5,6 +5,8 @@ VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueSender", "QueueSender\QueueSender.csproj", "{28BC49CD-EF75-42F0-9049-C6089D4C10E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueueReceiver", "QueueReceiver\QueueReceiver.csproj", "{EEE346C3-6796-4017-9352-92B8BD2D2964}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{28BC49CD-EF75-42F0-9049-C6089D4C10E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28BC49CD-EF75-42F0-9049-C6089D4C10E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28BC49CD-EF75-42F0-9049-C6089D4C10E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEE346C3-6796-4017-9352-92B8BD2D2964}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEE346C3-6796-4017-9352-92B8BD2D2964}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEE346C3-6796-4017-9352-92B8BD2D2964}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEE346C3-6796-4017-9352-92B8BD2D2964}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
