@@ -1,19 +1,19 @@
-﻿using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 
-namespace QueueReceiver
+namespace SessionQueueReceiver
 {
     class Program
     {
         static string connectionString = "Endpoint=sb://cauls-servicebus.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=a3q8JWEpTe6HnyAtsPKv/I6rslup0c7NcVGQrwURe9I=";
-        static string queueName = "caulfield-queue";
+        static string queueName = "caulfield-session-queue";
         static ServiceBusClient client;
-        //processor that reads and processes messages from the queue
-        static ServiceBusProcessor processor;
-
-        static async Task MessageHandler(ProcessMessageEventArgs args)
+        //session processor that reads and processes messages from the queue
+        static ServiceBusSessionProcessor sessionProcessor;
+        
+        static async Task MessageHandler(ProcessSessionMessageEventArgs args)
         {
             string body = args.Message.Body.ToString();
+
             Console.WriteLine($"Received: {body}");
 
             await args.CompleteMessageAsync(args.Message);
@@ -30,34 +30,39 @@ namespace QueueReceiver
             var clientOptions = new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets };
             client = new ServiceBusClient(connectionString, clientOptions);
 
-            // create a processor that we can use to process the messages
-            processor = client.CreateProcessor(queueName, new ServiceBusProcessorOptions());
-
+            
+            int sessions = 2;
             try
             {
-                // add handler to process messages
-                processor.ProcessMessageAsync += MessageHandler;
+                for(int i = 1; i <= sessions; i++)
+                {
+                    // create a processor that we can use to process the messages
+                    var options = new ServiceBusSessionProcessorOptions
+                    {
+                        SessionIds = { i.ToString() }
+                    };
+                    sessionProcessor = client.CreateSessionProcessor(queueName, options);
 
-                // add handler to process any errors
-                processor.ProcessErrorAsync += ErrorHandler;
+                    sessionProcessor.ProcessMessageAsync += MessageHandler;
 
-                // start processing 
-                await processor.StartProcessingAsync();
+                    sessionProcessor.ProcessErrorAsync += ErrorHandler;
+
+                    await sessionProcessor.StartProcessingAsync();
+                }
+                
 
                 Console.ReadKey();
 
-                // stop processing 
                 Console.WriteLine("\nStopping receiver...");
-                await processor.StopProcessingAsync();
+                await sessionProcessor.StopProcessingAsync();
                 Console.WriteLine("No longer receiving messages");
             }
             finally
             {
                 // Cleaning up network resources and unmanaged objects
-                await processor.DisposeAsync();
+                await sessionProcessor.DisposeAsync();
                 await client.DisposeAsync();
             }
         }
     }
 }
-

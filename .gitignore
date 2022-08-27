@@ -10,3 +10,12 @@
 /QueueSender/obj/Debug/net6.0
 /serviceBusConnStr.txt
 /QueueReceiver
+/QueueReceiverSession1/obj
+/Session1QueueReceiver/bin/Debug/net6.0
+/Session1QueueReceiver/obj
+/Session2QueueReceiver/bin/Debug/net6.0
+/Session2QueueReceiver/obj
+/SessionQueueReceiver/bin/Debug/net6.0
+/SessionQueueReceiver/obj
+/SessionQueueSender/bin/Debug/net6.0
+/SessionQueueSender/obj
